@@ -1,0 +1,406 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7fb;
+    color: #263449;
+}
+
+.navbar {
+    background-color: #142d4e;
+    color: white;
+    padding: 22px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 28px;
+    font-size: 15px;
+}
+
+.hero {
+    background: linear-gradient(120deg, #142d4e, #326b91);
+    color: white;
+    padding: 85px 8%;
+}
+
+.hero h1 {
+    font-size: 46px;
+    margin-bottom: 18px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 13px 24px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.btn-lost {
+    background-color: white;
+    color: #142d4e;
+}
+
+.btn-found {
+    background-color: #e9a23b;
+    color: #142d4e;
+}
+
+.section {
+    padding: 55px 8%;
+}
+
+.section h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.stat-card {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+}
+
+.stat-card h3 {
+    color: #326b91;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.stat-card p {
+    color: #68778a;
+}
+
+@media (max-width: 700px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .navbar {
+        padding: 18px 5%;
+    }
+}
+
+/* Report Form Styling */
+
+.section form {
+    max-width: 650px;
+    background: white;
+    padding: 35px;
+    margin-top: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+}
+
+.section form label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #263449;
+}
+
+.section form input,
+.section form select,
+.section form textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d5dce5;
+    border-radius: 7px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #fff;
+}
+
+.section form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.section form input:focus,
+.section form select:focus,
+.section form textarea:focus {
+    outline: none;
+    border-color: #326b91;
+}
+
+.section form button {
+    margin-top: 25px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.section form button:hover {
+    opacity: 0.9;
+}
+
+/* Recent Reports Section */
+
+.recent-reports {
+    margin-top: 50px;
+}
+
+.recent-reports h2 {
+    color: #193653;
+    margin-bottom: 10px;
+}
+
+.reports-subtitle {
+    color: #718096;
+    margin-bottom: 25px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+thead {
+    background: #193653;
+    color: white;
+}
+
+th, td {
+    padding: 18px;
+    text-align: left;
+    border-bottom: 1px solid #edf0f4;
+}
+
+th {
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: #f5f8fc;
+}
+
+.report-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.report-badge.lost {
+    background: #fff0e8;
+    color: #d97732;
+}
+
+.report-badge.found {
+    background: #e5f7ed;
+    color: #218653;
+}
+
+.empty-reports {
+    background: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    color: #718096;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Status Dropdown Styling */
+
+.recent-reports td form {
+    max-width: none;
+    width: auto;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.recent-reports td select {
+    width: auto;
+    min-width: 120px;
+    padding: 9px 14px;
+    border: 1px solid #d5dce5;
+    border-radius: 20px;
+    background-color: #f4f7fb;
+    color: #263449;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+.recent-reports td select:focus {
+    border-color: #326b91;
+}
+
+/* Smooth table appearance */
+.recent-reports tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+/* ==========================================
+   PREMIUM SEARCH AND FILTER DESIGN
+========================================== */
+
+.recent-reports .filter-container {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) 190px 170px auto;
+    align-items: center;
+    gap: 14px;
+
+    width: 100%;
+    padding: 18px;
+    margin: 25px 0 22px;
+
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(25, 54, 83, 0.05);
+}
+
+/* Search Box */
+
+.recent-reports .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    padding: 0 14px;
+
+    background: #f4f7fb;
+    border: 1px solid #dce4ed;
+    border-radius: 8px;
+}
+
+.recent-reports .search-box span {
+    color: #326b91;
+    font-size: 21px;
+}
+
+.recent-reports .search-box input {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 0;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    color: #263449;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.recent-reports .search-box:focus-within {
+    border-color: #326b91;
+}
+
+/* Category and Report Type Dropdowns */
+
+.recent-reports .filter-container select {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 12px;
+
+    background: #f4f7fb;
+    border: 1px solid #dce4ed;
+    border-radius: 8px;
+
+    color: #263449;
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+.recent-reports .filter-container select:focus {
+    border-color: #326b91;
+}
+
+/* Clear Filters Button */
+
+.recent-reports .filter-container button {
+    padding: 13px 19px;
+    background: #193653;
+    color: white;
+
+    border: none;
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.recent-reports .filter-container button:hover {
+    background: #326b91;
+}
+
+/* Responsive Layout */
+
+@media (max-width: 900px) {
+    .recent-reports .filter-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .recent-reports .search-box {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 550px) {
+    .recent-reports .filter-container {
+        grid-template-columns: 1fr;
+    }
+
+    .recent-reports .search-box {
+        grid-column: auto;
+    }
+}

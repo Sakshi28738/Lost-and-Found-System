@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lost & Found | Campus Portal</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Lost & Found</div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#dashboard">Dashboard</a>
+        </div>
+    </nav>
+
+
+    <!-- Welcome Section -->
+    <section class="hero">
+
+        <h1>Lost Something? We're Here to Help.</h1>
+
+        <p>Find what you've lost. Return what you've found.</p>
+
+        <div class="hero-buttons">
+
+            <a href="/report/Lost" class="btn btn-lost">
+                Report Lost Item
+            </a>
+
+            <a href="/report/Found" class="btn btn-found">
+                Report Found Item
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- Dashboard Section -->
+    <section class="section" id="dashboard">
+
+        <h2>Campus Lost & Found Dashboard</h2>
+
+
+        <!-- Dashboard Statistics -->
+        <div class="stats">
+
+            <div class="stat-card">
+                <h3>{{ total }}</h3>
+                <p>Total Reports</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ lost }}</h3>
+                <p>Lost Items</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ found }}</h3>
+                <p>Found Items</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>{{ resolved }}</h3>
+                <p>Resolved Items</p>
+            </div>
+
+        </div>
+
+
+        <!-- Recent Reports Section -->
+        <div class="recent-reports">
+
+            <h2>Recent Reports</h2>
+
+            <p class="reports-subtitle">
+                Latest lost and found items reported on campus.
+            </p>
+
+
+            <!-- Search and Filters -->
+            <div class="filter-container">
+
+                <div class="search-box">
+
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search items by name..."
+                    >
+
+                </div>
+
+
+                <select id="categoryFilter">
+
+                    <option value="">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Books">Books</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Documents">Documents</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Others">Others</option>
+
+                </select>
+
+
+                <select id="typeFilter">
+
+                    <option value="">All Reports</option>
+                    <option value="Lost">Lost Items</option>
+                    <option value="Found">Found Items</option>
+
+                </select>
+
+
+                <button type="button" id="clearFilters">
+                    Clear Filters
+                </button>
+
+            </div>
+
+
+            <!-- Reports Table -->
+            {% if items %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                            <th>Report Type</th>
+                            <th>Status</th>
+                            <th>Date Reported</th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in items %}
+
+                        <tr class="report-row">
+
+                            <td>{{ item['item_name'] }}</td>
+
+                            <td>{{ item['category'] }}</td>
+
+                            <td>{{ item['location'] }}</td>
+
+                            <td>
+
+                                <span class="report-badge {{ item['report_type']|lower }}">
+                                    {{ item['report_type'] }}
+                                </span>
+
+                            </td>
+
+
+                            <!-- Update Item Status -->
+                            <td>
+
+                                <form
+                                    action="{{ url_for('update_status', item_id=item['id']) }}"
+                                    method="POST"
+                                >
+
+                                    <select
+                                        name="status"
+                                        onchange="this.form.submit()"
+                                    >
+
+                                        <option
+                                            value="Open"
+                                            {% if item['status'] == 'Open' %}selected{% endif %}
+                                        >
+                                            Open
+                                        </option>
+
+
+                                        <option
+                                            value="Resolved"
+                                            {% if item['status'] == 'Resolved' %}selected{% endif %}
+                                        >
+                                            Resolved
+                                        </option>
+
+                                    </select>
+
+                                </form>
+
+                            </td>
+
+
+                            <td>{{ item['date_reported'] }}</td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+            <div class="empty-reports">
+
+                <h3>No Reports Yet</h3>
+
+                <p>
+                    Submitted lost and found items will appear here.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- JavaScript: Search and Filters -->
+    <script>
+
+        const searchInput = document.getElementById("searchInput");
+
+        const categoryFilter = document.getElementById("categoryFilter");
+
+        const typeFilter = document.getElementById("typeFilter");
+
+        const clearFilters = document.getElementById("clearFilters");
+
+        const reportRows = document.querySelectorAll(".report-row");
+
+
+        // Filter Reports
+        function filterReports() {
+
+            const searchValue = searchInput.value.toLowerCase();
+
+            const categoryValue = categoryFilter.value.toLowerCase();
+
+            const typeValue = typeFilter.value.toLowerCase();
+
+
+            reportRows.forEach(row => {
+
+                const itemName = row.cells[0].textContent.toLowerCase();
+
+                const category = row.cells[1].textContent.toLowerCase();
+
+                const reportType = row.cells[3].textContent.toLowerCase();
+
+
+                const matchesSearch = itemName.includes(searchValue);
+
+                const matchesCategory =
+                    !categoryValue || category === categoryValue;
+
+                const matchesType =
+                    !typeValue || reportType.includes(typeValue);
+
+
+                if (matchesSearch && matchesCategory && matchesType) {
+
+                    row.style.display = "";
+
+                } else {
+
+                    row.style.display = "none";
+
+                }
+
+            });
+
+        }
+
+
+        // Search by Item Name
+        searchInput.addEventListener("input", filterReports);
+
+
+        // Filter by Category
+        categoryFilter.addEventListener("change", filterReports);
+
+
+        // Filter by Report Type
+        typeFilter.addEventListener("change", filterReports);
+
+
+        // Clear All Filters
+        clearFilters.addEventListener("click", function () {
+
+            searchInput.value = "";
+
+            categoryFilter.value = "";
+
+            typeFilter.value = "";
+
+            filterReports();
+
+        });
+
+    </script>
+
+</body>
+
+</html>
